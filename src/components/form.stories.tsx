@@ -7,7 +7,7 @@ import { Button } from "@/components/button"
 type FormArgs = React.FormHTMLAttributes<HTMLFormElement>
 
 const render = ({ ...args }: FormArgs) => (
-	<form {...args} className="stack">
+	<Stack as="form" {...args}>
 		<Stack space="xs">
 			<label htmlFor="email">Email</label>
 			<input id="email" type="email" placeholder="&hellip;" />
@@ -21,7 +21,7 @@ const render = ({ ...args }: FormArgs) => (
 			<label htmlFor="remember">Remember me</label>
 		</Cluster>
 		<Button type="submit">Submit</Button>
-	</form>
+	</Stack>
 )
 
 const meta = {
