@@ -1,5 +1,5 @@
 import type { Preview } from "@storybook/react"
-import { renderToStaticMarkup } from "react-dom/server"
+import { renderToStaticMarkup, renderToString } from "react-dom/server"
 import xmlFormat from "xml-formatter"
 
 import theme from "./theme"
@@ -12,8 +12,8 @@ const preview: Preview = {
 			theme,
 			toc: true,
 			source: {
-				transform: (_: any, storyContext: any) => {
-					return xmlFormat(
+				transform: (source: any, storyContext: any) => {
+					return `// react\n${source}\n\n// html\n${xmlFormat(
 						renderToStaticMarkup(
 							storyContext.originalStoryFn(storyContext.args)
 						),
@@ -21,7 +21,7 @@ const preview: Preview = {
 					)
 						.replace(/=""/g, "")
 						.replace(/\ssrc=".*"/g, ' src="..." ')
-						.replace(/\sstyle=".*"/g, "")
+						.replace(/\sstyle=".*"/g, "")}`
 				},
 			},
 		},
