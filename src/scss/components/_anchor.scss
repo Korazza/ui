@@ -1,0 +1,8 @@
+@use "sass:color";
+
+@use "../abstracts/tokens";
+@use "../abstracts/mixins";
+
+a {
+	@include mixins.anchor();
+}

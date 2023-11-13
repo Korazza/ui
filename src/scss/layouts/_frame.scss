@@ -1,0 +1,25 @@
+@use "sass:map";
+
+@use "../abstracts/variables";
+@use "../abstracts/tokens";
+@use "../abstracts/functions" as *;
+
+.frame {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+
+	@each $key in map.keys(variables.$aspect-ratios) {
+		&[data-aspect-ratio="#{str-replace($key, '-', ':')}"] {
+			aspect-ratio: aspect-ratio("#{$key}");
+		}
+	}
+
+	& > img,
+	& > video {
+		inline-size: 100%;
+		block-size: 100%;
+		object-fit: cover;
+	}
+}

@@ -1,0 +1,35 @@
+import React from "react"
+import { Meta, Typeset } from "@storybook/blocks"
+
+import { fonts, fontSizes } from "../config"
+
+export const text =
+	"Whereas disregard and contempt for human rights have resulted"
+
+<Meta title="Theme/Fonts" />
+
+{fonts.map(font => (
+
+<React.Fragment key={font}>
+	<h3>{font}</h3>
+	<p>
+		{getComputedStyle(document.documentElement).getPropertyValue(
+			`--font-family-${font}`
+		)}
+	</p>
+	<Typeset
+		fontSizes={fontSizes.map((fontSize) =>
+			getComputedStyle(document.documentElement).getPropertyValue(
+				`--font-size-${fontSize}`
+			)
+		)}
+		fontWeight={getComputedStyle(document.documentElement).getPropertyValue(
+			"--font-weight-regular"
+		)}
+		fontFamily={getComputedStyle(document.documentElement).getPropertyValue(
+			`--font-family-${font}`
+		)}
+		sampleText={text}
+	/>
+</React.Fragment>
+))}

@@ -1,0 +1,67 @@
+@use "../abstracts/variables";
+@use "../abstracts/tokens";
+
+:root {
+	color-scheme: tokens.$color-scheme;
+
+	// default
+	--size: #{tokens.$size};
+	--space: #{tokens.$space};
+
+	// breakpoints
+	@each $key, $value in variables.$breakpoints {
+		--breakpoint-#{$key}: #{$value};
+	}
+
+	// colors
+	@each $key, $shades in variables.$colors {
+		@each $shade, $value in $shades {
+			--color-#{$key}-#{$shade}: #{$value};
+		}
+	}
+
+	// sizes
+	@each $key, $value in variables.$sizes {
+		--size-#{$key}: #{$value};
+	}
+
+	// spaces
+	@each $key, $value in variables.$spaces {
+		--space-#{$key}: #{$value};
+	}
+
+	// radiuses
+	@each $key, $value in variables.$radiuses {
+		--radius-#{$key}: #{$value};
+	}
+
+	// font sizes
+	@each $key, $value in variables.$font-sizes {
+		--font-size-#{$key}: #{$value};
+	}
+
+	// font weights
+	@each $key, $value in variables.$font-weights {
+		--font-weight-#{$key}: #{$value};
+	}
+
+	// font families
+	@each $key, $value in variables.$font-families {
+		--font-family-#{$key}: #{$value};
+	}
+
+	// border
+	@each $key, $value in variables.$border-widths {
+		--border-#{$key}: #{$value};
+	}
+
+	// shadows
+	@each $key, $value in variables.$shadows {
+		--shadow-#{$key}: #{$value};
+	}
+
+	// aspect ratios
+	@each $key, $value in variables.$aspect-ratios {
+		--aspect-ratio-#{$key}: #{$value};
+	}
+}

@@ -1,0 +1,74 @@
+@use "sass:map";
+@use "sass:meta";
+@use "sass:math";
+@use "sass:color";
+
+@use "variables";
+@use "tokens";
+
+@mixin mq($size) {
+	@if map.has-key(variables.$breakpoints, $size) {
+		$breakpoint: map.get(variables.$breakpoints, $size);
+		@media screen and (min-width: $breakpoint) {
+			@content;
+		}
+	} @else if meta.type-of($size) == number {
+		@if math.is-unitless($size) {
+			@error 'when using a number with @mq() make sure to include a unit';
+		} @else {
+			@media screen and (min-width: $size) {
+				@content;
+			}
+		}
+	} @else {
+		@error '#{$size} is not a valid breakpoint';
+	}
+}
+
+@mixin heading($heading-size) {
+	@if not map.has-key(tokens.$heading-font-sizes, $heading-size) {
+		@error '"#{$heading-size}" is not a heading size';
+	}
+
+	color: tokens.$heading-color;
+	text-transform: tokens.$heading-text-transform;
+	line-height: tokens.$heading-line-height;
+	letter-spacing: tokens.$heading-letter-spacing;
+	font-family: tokens.$heading-font-family;
+	font-weight: tokens.$heading-font-weight;
+	font-size: map.get(tokens.$heading-font-sizes, $heading-size);
+}
+
+@mixin anchor(
+	$text-decoration: tokens.$anchor-text-decoration,
+	$text-underline-offset: tokens.$anchor-text-underline-offset,
+	$color: tokens.$anchor-color,
+	$visited-color: tokens.$anchor-visited-color,
+	$hover-color: tokens.$anchor-hover-color,
+	$active-opacity: tokens.$anchor-active-opacity
+) {
+	color: $color;
+	text-decoration: $text-decoration;
+	text-underline-offset: $text-underline-offset;
+	transition: all 150ms ease-in-out;
+	cursor: pointer;
+
+	&:visited {
+		color: $visited-color;
+	}
+
+	&:hover {
+		color: $hover-color;
+		text-shadow: 0 0 2px $hover-color;
+	}
+
+	&:is(:active, :focus) {
+		text-shadow: 0 0 4px
+			hsla(
+				color.hue($color),
+				color.saturation($color),
+				color.lightness($color),
+				$active-opacity
+			);
+	}
+}

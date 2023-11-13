@@ -1,0 +1,28 @@
+import React from "react"
+import { Meta, ColorPalette, ColorItem } from "@storybook/blocks"
+
+import { colors, colorShades } from "../config"
+import { toPascalCase, hslToHex } from "../utils"
+
+<Meta title="Theme/Colors" />
+
+<ColorPalette>
+	{colors.map((color) => (
+		<React.Fragment key={color}>
+			<h3 className="font-semibold">{`${toPascalCase(color)}`}</h3>
+			<ColorItem
+				colors={colorShades.reduce(
+					(acc, curr) => (
+						(acc[curr] = hslToHex(
+							getComputedStyle(document.documentElement).getPropertyValue(
+								`--color-${color}-${curr}`
+							)
+						)),
+						acc
+					),
+					{}
+				)}
+			/>
+		</React.Fragment>
+	))}
+</ColorPalette>

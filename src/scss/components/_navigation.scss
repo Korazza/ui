@@ -1,0 +1,22 @@
+@use "sass:color";
+
+@use "../abstracts/tokens";
+@use "../abstracts/mixins";
+
+.navigation {
+	font-family: tokens.$navigation-font-family;
+	font-weight: tokens.$navigation-font-weight;
+
+	ul li {
+		list-style: none;
+	}
+
+	a {
+		@include mixins.anchor(
+			$text-decoration: tokens.$navigation-anchor-text-decoration,
+			$color: tokens.$navigation-anchor-color,
+			$visited-color: tokens.$navigation-anchor-visited-color,
+			$hover-color: tokens.$navigation-anchor-hover-color
+		);
+	}
+}

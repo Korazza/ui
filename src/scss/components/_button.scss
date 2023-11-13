@@ -1,0 +1,90 @@
+@use "sass:map";
+@use "sass:color";
+
+@use "../abstracts/tokens";
+
+@mixin button-variant($button-variant) {
+	@if not map.has-key(tokens.$button-variants, $button-variant) {
+		@error '#{$button-variant} is not a valid button variant';
+	}
+
+	@each $key, $value in map.get(tokens.$button-variants, $button-variant) {
+		#{$key}: #{$value};
+
+		@if $key == "background-color" and $value != rgba(0, 0, 0, 0) {
+			&:hover {
+				#{$key}: #{color.adjust($value, $lightness: -5%)};
+			}
+
+			&:active {
+				#{$key}: #{color.adjust($value, $lightness: -10%)};
+				box-shadow: 0
+					0
+					8px
+					4px
+					hsla(
+						color.hue($value),
+						color.saturation($value),
+						color.lightness($value),
+						0.25
+					);
+			}
+		}
+	}
+}
+
+@mixin button-size($button-size) {
+	@if not map.has-key(tokens.$button-sizes, $button-size) {
+		@error '#{$button-size} is not a valid button size';
+	}
+
+	@each $key, $value in map.get(tokens.$button-sizes, $button-size) {
+		#{$key}: #{$value};
+	}
+}
+
+.button {
+	@include button-variant(tokens.$button-default-variant);
+	@include button-size(tokens.$button-default-size);
+
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	border: 0;
+	border-radius: tokens.$button-border-radius;
+	text-decoration: none;
+	font-family: tokens.$button-font-family;
+	font-weight: tokens.$button-font-weight;
+	line-height: tokens.$button-line-height;
+	transition:
+		background-color tokens.$button-transition-easing
+			tokens.$button-transition-duration,
+		box-shadow tokens.$button-transition-easing
+			tokens.$button-transition-duration;
+
+	&:not(:disabled) {
+		cursor: pointer;
+	}
+
+	@each $key in map.keys(tokens.$button-variants) {
+		$selector: '&[data-variant="#{$key}"]';
+		@if ($key == tokens.$button-default-variant) {
+			$selector: "&, #{$selector}";
+		}
+
+		#{$selector} {
+			@include button-variant($key);
+		}
+	}
+
+	@each $key in map.keys(tokens.$button-sizes) {
+		$selector: '&[data-size="#{$key}"]';
+		@if ($key == tokens.$button-default-size) {
+			$selector: "&, #{$selector}";
+		}
+
+		#{$selector} {
+			@include button-size($key);
+		}
+	}
+}

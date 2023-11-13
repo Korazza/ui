@@ -1,0 +1,21 @@
+@use "sass:map";
+
+@use "../abstracts/variables";
+@use "../abstracts/tokens";
+@use "../abstracts/functions" as *;
+
+.grid {
+	display: grid;
+
+	@each $key in map.keys(variables.$spaces) {
+		$selector: '&[data-space="#{$key}"]';
+
+		@if (tokens.$space == space($key)) {
+			$selector: "&, #{$selector}";
+		}
+
+		#{$selector} {
+			grid-gap: space("#{$key}");
+		}
+	}
+}

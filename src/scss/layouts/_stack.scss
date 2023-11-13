@@ -1,0 +1,27 @@
+@use "sass:map";
+
+@use "../abstracts/variables";
+@use "../abstracts/tokens";
+@use "../abstracts/functions" as *;
+
+.stack {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+
+	& > * {
+		margin-block: 0;
+	}
+
+	@each $key in map.keys(variables.$spaces) {
+		$selector: '&[data-space="#{$key}"] > * + *';
+
+		@if (tokens.$space == space($key)) {
+			$selector: "& > * + *, #{$selector}";
+		}
+
+		#{$selector} {
+			margin-block-start: space("#{$key}");
+		}
+	}
+}

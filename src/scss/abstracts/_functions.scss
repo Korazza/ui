@@ -1,0 +1,129 @@
+@use "sass:string";
+@use "sass:map";
+
+@use "variables";
+
+// utils
+
+@function str-replace($string, $search, $replace: "") {
+	$index: string.index($string, $search);
+
+	@if $index {
+		@return string.slice($string, 1, $index - 1) + $replace +
+			str-replace(
+				string.slice($string, $index + string.length($search)),
+				$search,
+				$replace
+			);
+	}
+	@return $string;
+}
+
+// size
+@function breakpoint($key) {
+	@if not map.has-key(variables.$breakpoints, $key) {
+		@error '"#{$key}" is not a valid breakpoint';
+	}
+
+	@return var(--breakpoint-#{$key});
+}
+
+// color
+@function color($key, $shade: "500", $css-var: true) {
+	@if not map.has-key(variables.$colors, $key) {
+		@error '"#{$key}" is not a valid color';
+	}
+
+	$color-shades: map.get(variables.$colors, $key);
+
+	@if not map.has-key($color-shades, $shade) {
+		@error '"#{$shade}" is not a valid shade for "#{$key}"';
+	}
+
+	@if $css-var {
+		@return var(--color-#{$key}-#{$shade});
+	} @else {
+		@return map.get($color-shades, $shade);
+	}
+}
+
+// size
+@function size($key) {
+	@if not map.has-key(variables.$sizes, $key) {
+		@error '"#{$key}" is not a valid size';
+	}
+
+	@return var(--size-#{$key});
+}
+
+// space
+@function space($key) {
+	@if not map.has-key(variables.$spaces, $key) {
+		@error '"#{$key}" is not a valid space';
+	}
+
+	@return var(--space-#{$key});
+}
+
+// radius
+@function radius($key) {
+	@if not map.has-key(variables.$radiuses, $key) {
+		@error '"#{$key}" is not a valid radius';
+	}
+
+	@return var(--radius-#{$key});
+}
+
+// font-size
+@function font-size($key) {
+	@if not map.has-key(variables.$font-sizes, $key) {
+		@error '"#{$key}" is not a valid font size';
+	}
+
+	@return var(--font-size-#{$key});
+}
+
+// font-weight
+@function font-weight($key) {
+	@if not map.has-key(variables.$font-weights, $key) {
+		@error '"#{$key}" is not a valid font weight';
+	}
+
+	@return var(--font-weight-#{$key});
+}
+
+// font-family
+@function font-family($key) {
+	@if not map.has-key(variables.$font-families, $key) {
+		@error '"#{$key}" is not a valid font family';
+	}
+
+	@return var(--font-family-#{$key});
+}
+
+// border
+@function border($key) {
+	@if not map.has-key(variables.$border-widths, $key) {
+		@error '"#{$key}" is not a valid border';
+	}
+
+	@return var(--border-#{$key});
+}
+
+// shadow
+@function shadow($key) {
+	@if not map.has-key(variables.$shadows, $key) {
+		@error '"#{$key}" is not a valid shadow';
+	}
+
+	@return var(--shadow-#{$key});
+}
+
+// shadow
+@function aspect-ratio($key) {
+	@if not map.has-key(variables.$aspect-ratios, $key) {
+		@error '"#{$key}" is not a valid aspect ratio';
+	}
+
+	@return var(--aspect-ratio-#{$key});
+}
