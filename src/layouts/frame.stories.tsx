@@ -41,3 +41,7 @@ type Story = StoryObj<FrameArgs>
 export default meta
 
 export const _Frame: Story = {}
+
+export const WithoutAspectRatio: Story = {
+	args: { aspectRatio: undefined },
+}

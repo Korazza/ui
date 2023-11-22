@@ -11,7 +11,7 @@ export function Frame<T extends React.ElementType = "div">({
 	className,
 	children,
 	as,
-	aspectRatio = "16:9",
+	aspectRatio,
 	...props
 }: FrameProps<T> &
 	Omit<React.ComponentPropsWithoutRef<T>, keyof FrameProps<T>>) {

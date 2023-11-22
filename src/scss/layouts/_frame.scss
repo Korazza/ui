@@ -9,6 +9,7 @@
 	justify-content: center;
 	align-items: center;
 	overflow: hidden;
+	aspect-ratio: unset;
 
 	@each $key in map.keys(variables.$aspect-ratios) {
 		&[data-aspect-ratio="#{str-replace($key, '-', ':')}"] {
