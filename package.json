@@ -6,6 +6,7 @@
 	"scripts": {
 		"build-storybook": "storybook build",
 		"storybook": "storybook dev -p 6006 --no-open",
+		"format": "prettier --write --cache '**/*.([tj]s?(x)|md?(x))'",
 		"lint": "eslint . --ext ts,tsx"
 	},
 	"dependencies": {
